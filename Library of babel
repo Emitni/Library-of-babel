@@ -1,0 +1,37 @@
+import random
+import string
+
+def generate_random_text(length):
+    characters = string.ascii_lowercase
+    return ''.join(random.choice(characters) for _ in range(length))
+
+def generate_random_page(page_length):
+    return generate_random_text(page_length)
+
+def generate_random_book(pages_per_book, page_length):
+    return [generate_random_page(page_length) for _ in range(pages_per_book)]
+
+def generate_random_shelf(books_per_shelf, pages_per_book, page_length):
+    return [generate_random_book(pages_per_book, page_length) for _ in range(books_per_shelf)]
+
+def generate_random_library(books_per_shelf, pages_per_book, page_length, num_shelves):
+    return [[[generate_random_page(page_length) for _ in range(pages_per_book)] for _ in range(books_per_shelf)] for _ in range(num_shelves)]
+
+# Example parameters:
+books_per_shelf = 10
+pages_per_book = 100
+page_length = 1000 # Increased the length per page
+num_shelves = 5
+
+# Auto-repeat generation
+while True:
+    library = generate_random_library(books_per_shelf, pages_per_book, page_length, num_shelves)
+
+    # Accessing a random page in a random book on a random shelf
+    random_shelf = random.randint(0, num_shelves - 1)
+    random_book = random.randint(0, books_per_shelf - 1)
+    random_page = random.randint(0, pages_per_book - 1)
+
+    print("Random page content:")
+    print(library[random_shelf][random_book][random_page])
+    print("\n")
